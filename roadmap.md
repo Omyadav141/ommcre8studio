@@ -1,0 +1,11 @@
+- [x] Correct the legal reference to trulegaladvice.com and replace visible AI pictures with authentic media or honest pending previews; five tests and browser navigation checks passed.
+- [x] Restore light animated presentation and remove photographic backgrounds.
+- [x] Show three compact project entries and improve detail-page return navigation.
+- [x] Expand Production and verify navigation and presentation; three project entries, close/back navigation, exact legal URL, zero browser errors and nine passing tests.
+- [x] Expand services, production, studio, founder, process, journal and legal pages.
+- [x] Replace speculative case-study claims with verified reference content and asset needs.
+- [x] Enable real inquiry persistence and honest submission feedback.
+- [x] Connect real Calendly scheduling.
+- [ ] Configure owner/client app emails — blocked on owned sender domain setup and confirmed notification address.
+- [ ] Publish verified case studies and final legal notices — blocked on owner approvals, authentic assets, entity/jurisdiction and retention details.
+- [x] Verify navigation, saved enquiry flow, desktop/mobile presentation and tests. Live Calendly dates and time zone render; no appointment was submitted during verification.

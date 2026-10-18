@@ -1,0 +1,4 @@
+import { CTA } from "./Shell";
+export function EditorialPage({ eyebrow, title, introduction, sections }: { eyebrow: string; title: string; introduction: string; sections: { title: string; body: string }[] }) {
+  return <><article className="container-x pt-20 md:pt-28"><p className="eyebrow">{eyebrow}</p><h1 className="mt-5 max-w-4xl text-5xl font-medium md:text-7xl">{title}</h1><p className="mt-7 max-w-2xl text-xl leading-relaxed text-muted-foreground">{introduction}</p><div className="mt-16">{sections.map((s,i)=><section key={s.title} className="grid gap-5 border-t py-10 md:grid-cols-[1fr_1.4fr]"><div><span className="font-mono text-xs text-muted-foreground">0{i+1}</span><h2 className="mt-3 text-2xl">{s.title}</h2></div><p className="max-w-xl leading-relaxed text-muted-foreground">{s.body}</p></section>)}</div></article><CTA/></>;
+}

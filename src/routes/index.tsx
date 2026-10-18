@@ -1,0 +1,37 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowDown, ArrowUpRight, Code2, Aperture, Fingerprint, TrendingUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { CTA, Reveal, SectionHead, seo } from "@/components/site/Shell";
+import { ProjectCard } from "@/components/site/ProjectCard";
+import { projects } from "@/lib/site";
+
+export const Route = createFileRoute("/")({
+  head: () => seo("OMCRE8 Studio — Digital Products & Creative Production", "OMCRE8 Studio brings websites, software, brand strategy, film production and digital marketing together. Founded by Om Yadav."),
+  component: Index,
+});
+const capabilities = [
+  { n: "01", title: "Digital engineering", text: "Websites, custom software, mobile applications and commerce. Purpose-built for your customers and the way your business works.", icon: Code2, slug: "web-development", detail: "Web · Software · E-commerce · APIs" },
+  { n: "02", title: "Brand & experience", text: "A clear position, a distinctive identity and an intuitive experience. Strategy and design that give every touchpoint the same voice.", icon: Fingerprint, slug: "branding", detail: "Strategy · Identity · UI/UX · Creative" },
+  { n: "03", title: "Film & production", text: "From a first idea to the final frame. Direction, cinematography, editing, colour and sound for stories worth watching.", icon: Aperture, slug: "video-production", detail: "Films · Cinematography · Post-production" },
+  { n: "04", title: "Marketing & growth", text: "Content, Instagram management, campaigns and search. A considered plan that connects your brand with the people it was made for.", icon: TrendingUp, slug: "digital-marketing", detail: "Social · Performance · Content · SEO" },
+];
+function Index() {
+  return <>
+    <section className="relative isolate mt-3 overflow-hidden border-b">
+      <div className="container-x pt-16 pb-10 md:pt-24 md:pb-12">
+        <div className="mb-10 flex items-center gap-3 text-xs text-muted-foreground"><span className="h-px w-8 bg-primary" />OMCRE8 STUDIO / INDEPENDENT DIGITAL & CREATIVE</div>
+        <h1 className="editorial-title animate-rise max-w-4xl font-medium">Ideas to Digital<br className="hidden md:block" /> Products.<br /><span className="text-muted-foreground">Built to Scale.</span></h1>
+        <p className="mt-7 max-w-lg text-base leading-relaxed text-muted-foreground">Strategy, design, code and cinema. We build digital businesses and create the stories that move them forward.</p>
+        <div className="mt-8 flex flex-wrap gap-3"><Button asChild size="lg"><Link to="/contact">Start Your Project <ArrowUpRight /></Link></Button><Button asChild size="lg" variant="outline" className="glass"><Link to="/work">Explore Our Work <ArrowUpRight /></Link></Button></div>
+        <div className="mt-16 flex items-end justify-between gap-6 border-t border-foreground/15 pt-6"><p className="max-w-xs text-xs text-muted-foreground">One studio. From the first conversation<br />to the product, the campaign and the final cut.</p><ArrowDown size={18} className="text-muted-foreground" /></div>
+      </div>
+    </section>
+    <div className="overflow-hidden border-b py-5"><div className="flex w-max animate-[marquee_45s_linear_infinite] gap-12 text-sm text-muted-foreground">{Array.from({ length: 2 }, (_, i) => ["Web & Software", "Brand Strategy", "Cinematography", "E-commerce", "Video Editing", "Digital Marketing"].map(t => <span key={`${i}-${t}`} className="flex items-center gap-12">{t}<span className="text-foreground">✦</span></span>))}</div></div>
+    <section className="container-x py-24"><div className="grid gap-10 md:grid-cols-[1fr_1.2fr]"><SectionHead eyebrow="A studio without silos" title="Built together. Better together." /><Reveal><p className="text-lg leading-relaxed text-muted-foreground">A business doesn't stop at its website. Neither do we. OMCRE8 brings engineering, brand design, creative production and marketing into one coordinated conversation.</p><Link to="/about" className="mt-6 inline-flex items-center gap-2 text-sm">Meet the studio <ArrowUpRight size={16} /></Link></Reveal></div>
+    <div className="mt-14 grid gap-4 md:grid-cols-2">{capabilities.map(c => <Reveal key={c.n}><Link to="/services/$slug" params={{ slug: c.slug }} className="glass-card group block h-full rounded-lg p-7 transition-colors hover:bg-accent md:p-9"><div className="flex items-center justify-between text-muted-foreground"><span className="font-mono text-xs">{c.n} / CAPABILITY</span><c.icon size={23} /></div><h3 className="mt-9 text-2xl font-medium">{c.title}</h3><p className="mt-4 max-w-md text-sm leading-relaxed text-muted-foreground">{c.text}</p><div className="mt-8 flex items-center justify-between gap-4 border-t pt-5"><span className="text-xs text-muted-foreground">{c.detail}</span><ArrowUpRight size={18} /></div></Link></Reveal>)}</div></section>
+    <section className="border-y bg-ink py-20"><div className="container-x"><div className="mb-10 flex flex-wrap items-end justify-between gap-6"><SectionHead eyebrow="Work & concepts" title="Small details. Bigger possibilities." /><Link to="/work" className="inline-flex items-center gap-2 text-sm">View work <ArrowUpRight size={16} /></Link></div><div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{projects.map(p => <Reveal key={p.slug}><ProjectCard p={p} /></Reveal>)}</div></div></section>
+    <section className="container-x py-24"><div className="grid gap-12 md:grid-cols-2"><Reveal><p className="eyebrow">Film & creative production</p><h2 className="mt-4 text-4xl font-medium md:text-5xl">Every frame.<br />With intention.</h2><p className="mt-6 max-w-lg leading-relaxed text-muted-foreground">Brand films, product stories, interviews and social content. We shape the idea, plan the shoot and bring the story together in the edit — with colour, sound and versions for the places it needs to live.</p><Button asChild variant="outline" className="mt-8"><Link to="/production">Explore production <ArrowUpRight /></Link></Button></Reveal><Reveal className="border-l pl-8"><p className="eyebrow">From concept to delivery</p>{[["Pre-production", "Creative treatment, script, shot list and production planning."], ["Production", "Direction, cinematography, lighting and audio capture."], ["Post-production", "Editing, colour, sound, motion and platform-ready delivery."]].map(([t,d],i) => <div key={t} className="border-b py-7"><span className="font-mono text-xs text-muted-foreground">0{i+1}</span><h3 className="mt-2 text-xl">{t}</h3><p className="mt-2 text-sm text-muted-foreground">{d}</p></div>)}</Reveal></div></section>
+    <section className="border-y py-20"><div className="container-x"><SectionHead eyebrow="The way we work" title="Clarity at every stage." /><ol className="mt-12 grid gap-8 md:grid-cols-5">{[["Discover","Understand the business, audience and ambition."],["Define","Agree scope, deliverables, budget and timing."],["Create","Design, develop or produce with regular reviews."],["Refine","Test, review and resolve the details."],["Launch","Deliver, document and agree ongoing support."]].map(([t,d],i) => <li key={t} className="border-t pt-5"><span className="font-mono text-xs text-muted-foreground">0{i+1}</span><h3 className="mt-6 font-medium">{t}</h3><p className="mt-3 text-sm text-muted-foreground">{d}</p></li>)}</ol><Link to="/process" className="mt-10 inline-flex items-center gap-2 text-sm">Our process <ArrowUpRight size={16} /></Link></div></section>
+    <CTA />
+  </>;
+}
