@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <rect width="120" height="120" rx="26" fill="#08090B" />
+  <rect x="2" y="2" width="116" height="116" rx="24" fill="none" stroke="#C59B4B" stroke-width="2" stroke-opacity="0.35" />
+  <!-- OMMCRE8 Monogram -->
+  <text x="60" y="65" font-family="-apple-system, BlinkMacSystemFont, 'Geist', sans-serif" font-weight="900" font-size="28" fill="#FFFFFF" text-anchor="middle" letter-spacing="2">
+    OMM<tspan fill="#C59B4B">8</tspan>
+  </text>
+  <text x="60" y="86" font-family="-apple-system, BlinkMacSystemFont, 'Geist Mono', monospace" font-weight="700" font-size="9.5" fill="#C59B4B" text-anchor="middle" letter-spacing="4">
+    LETS GROW
+  </text>
+</svg>

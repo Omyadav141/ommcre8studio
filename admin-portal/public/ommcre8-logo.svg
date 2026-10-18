@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 72" width="320" height="72" fill="none">
+  <!-- OMMCRE8 wordmark -->
+  <text x="160" y="44" font-family="-apple-system, BlinkMacSystemFont, 'Geist', 'Inter', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif" font-weight="900" font-size="44" fill="#FFFFFF" text-anchor="middle" letter-spacing="3">
+    OMMCRE<tspan fill="#C59B4B">8</tspan>
+  </text>
+  <!-- LETS GROW subtitle -->
+  <text x="160" y="64" font-family="-apple-system, BlinkMacSystemFont, 'Geist Mono', monospace" font-weight="700" font-size="12" fill="#C59B4B" text-anchor="middle" letter-spacing="7">
+    LETS GROW
+  </text>
+</svg>

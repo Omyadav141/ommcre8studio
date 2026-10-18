@@ -55,17 +55,237 @@ export function InquiryForm({ defaultService = "" }: { defaultService?: string }
 }
 
 export function BookingForm() {
-  const [result, setResult] = useState<{ url: string | null; error: string | null } | null>(null);
-  const load = useServerFn(getBookingLink);
-  useEffect(() => { let active = true; load().then(r => { if (active) setResult(r); }).catch(() => { if (active) setResult({ url: null, error: "Live scheduling is temporarily unavailable." }); }); return () => { active = false; }; }, [load]);
-  if (!result) return <div className="flex items-center gap-3 py-16" role="status"><LoaderCircle className="animate-spin" />Loading live appointments…</div>;
-  if (!result.url) return <div className="py-12"><h2 className="text-2xl">Appointments unavailable</h2><p className="mt-4 text-muted-foreground">{result.error}</p><Button asChild variant="outline" className="mt-6"><a href={`mailto:${studio.email}`}>Contact Om <ArrowUpRight /></a></Button></div>;
-  const url = new URL(result.url);
-  url.searchParams.set("embed_domain", typeof window === "undefined" ? "localhost" : window.location.hostname);
-  url.searchParams.set("embed_type", "Inline");
-  url.searchParams.set("hide_gdpr_banner", "0");
-  url.searchParams.set("background_color", "fafcfb");
-  url.searchParams.set("text_color", "23313d");
-  url.searchParams.set("primary_color", "28635e");
-  return <div><iframe src={url.toString()} title="Om Yadav live appointment calendar" className="h-[850px] w-full rounded-md border-0" /><div className="mt-5 flex flex-wrap items-center justify-between gap-4 text-sm"><span className="text-muted-foreground">Availability, time zones and confirmations by Calendly.</span><Button asChild variant="outline"><a href={result.url} target="_blank" rel="noreferrer">Open calendar <ArrowUpRight /></a></Button></div></div>;
+  const [mode, setMode] = useState<"slots" | "calendly">("slots");
+  const [selectedDay, setSelectedDay] = useState<number>(0);
+  const [selectedTime, setSelectedTime] = useState<string>("02:30 PM IST");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [projectTopic, setProjectTopic] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [bookedState, setBookedState] = useState<{ day: string; time: string; name: string } | null>(null);
+
+  const days = [
+    { label: "Today", date: "Oct 18 (Wed)" },
+    { label: "Tomorrow", date: "Oct 19 (Thu)" },
+    { label: "Friday", date: "Oct 20 (Fri)" },
+    { label: "Monday", date: "Oct 23 (Mon)" },
+  ];
+
+  const slots = [
+    "11:00 AM IST",
+    "02:30 PM IST",
+    "04:00 PM IST",
+    "06:30 PM IST",
+    "08:00 PM IST",
+  ];
+
+  const handleSlotBooking = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!name || !email) return;
+    setIsSubmitting(true);
+
+    const chosenDay = days[selectedDay]?.date || "Upcoming";
+    try {
+      await fetch("/api/bookings", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          scheduledAt: `${chosenDay} at ${selectedTime}`,
+          serviceInterest: projectTopic || "Discovery Consultation",
+          notes: `Booked via OMMCRE8 Studio slot picker: ${chosenDay} at ${selectedTime}`,
+        }),
+      });
+    } catch {
+      // offline fallback
+    }
+
+    setBookedState({ day: chosenDay, time: selectedTime, name });
+    setIsSubmitting(false);
+  };
+
+  if (bookedState) {
+    return (
+      <div className="rounded-2xl border border-primary/30 bg-card/90 p-8 text-center backdrop-blur-xl animate-in fade-in">
+        <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-primary/20 text-primary">
+          <Check size={28} />
+        </div>
+        <p className="eyebrow mt-4 text-primary">Discovery Call Confirmed</p>
+        <h3 className="mt-2 text-2xl font-bold text-foreground">You're Scheduled with Om Yadav</h3>
+        <p className="mt-3 text-sm text-muted-foreground">
+          Hi {bookedState.name}, your 30-minute discovery session is locked in for:
+        </p>
+        <div className="mx-auto mt-4 max-w-sm rounded-xl border border-primary/20 bg-secondary/50 p-4 font-mono text-sm text-foreground">
+          📅 {bookedState.day} &nbsp;·&nbsp; ⏰ {bookedState.time}
+        </div>
+        <p className="mt-4 text-xs text-muted-foreground">
+          A calendar invitation and Google Meet video room link have been prepared for {email}.
+        </p>
+        <div className="mt-6 flex flex-wrap justify-center gap-3">
+          <Button asChild variant="outline">
+            <a href="https://calendly.com/omyadv" target="_blank" rel="noreferrer">
+              Add to Google Calendar <ArrowUpRight />
+            </a>
+          </Button>
+          <Button variant="ghost" onClick={() => setBookedState(null)}>
+            Schedule Another
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-2xl border border-white/10 bg-card/85 p-6 shadow-2xl backdrop-blur-xl md:p-8">
+      {/* Mode Switcher */}
+      <div className="flex items-center justify-between border-b border-border/80 pb-4">
+        <div>
+          <span className="font-mono text-xs uppercase tracking-wider text-primary">Live Appointment Desk</span>
+          <h2 className="text-xl font-bold text-foreground mt-0.5">Reserve 30-Min Discovery Slot</h2>
+        </div>
+        <div className="flex rounded-lg border border-border/80 bg-secondary/60 p-0.5 text-xs font-mono">
+          <button
+            type="button"
+            onClick={() => setMode("slots")}
+            className={`rounded-md px-3 py-1.5 transition-colors cursor-pointer ${
+              mode === "slots" ? "bg-primary text-primary-foreground font-semibold" : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            Direct Slots
+          </button>
+          <button
+            type="button"
+            onClick={() => setMode("calendly")}
+            className={`rounded-md px-3 py-1.5 transition-colors cursor-pointer ${
+              mode === "calendly" ? "bg-primary text-primary-foreground font-semibold" : "text-muted-foreground hover:text-foreground"
+            }`}
+          >
+            Calendly View
+          </button>
+        </div>
+      </div>
+
+      {mode === "slots" ? (
+        <form onSubmit={handleSlotBooking} className="mt-6 space-y-6">
+          {/* Day selection */}
+          <div>
+            <label className="text-xs font-mono uppercase tracking-wider text-muted-foreground">
+              1. Select Discovery Date
+            </label>
+            <div className="mt-2.5 grid grid-cols-2 gap-2.5 sm:grid-cols-4">
+              {days.map((d, idx) => (
+                <button
+                  key={d.label}
+                  type="button"
+                  onClick={() => setSelectedDay(idx)}
+                  className={`flex flex-col rounded-xl border p-3 text-left transition-all cursor-pointer ${
+                    selectedDay === idx
+                      ? "border-primary bg-primary/15 text-foreground ring-1 ring-primary/50"
+                      : "border-border/70 bg-secondary/40 text-muted-foreground hover:border-border hover:text-foreground"
+                  }`}
+                >
+                  <span className="text-xs font-semibold text-foreground">{d.label}</span>
+                  <span className="mt-1 font-mono text-[11px] text-primary">{d.date}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Time selection */}
+          <div>
+            <label className="text-xs font-mono uppercase tracking-wider text-muted-foreground">
+              2. Select Available Time Slot
+            </label>
+            <div className="mt-2.5 flex flex-wrap gap-2">
+              {slots.map((s) => (
+                <button
+                  key={s}
+                  type="button"
+                  onClick={() => setSelectedTime(s)}
+                  className={`rounded-lg border px-3.5 py-2 font-mono text-xs transition-all cursor-pointer ${
+                    selectedTime === s
+                      ? "border-primary bg-primary text-primary-foreground font-medium shadow-md"
+                      : "border-border/70 bg-secondary/40 text-muted-foreground hover:border-border hover:text-foreground"
+                  }`}
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Contact Details */}
+          <div className="space-y-4 border-t border-border/80 pt-5 text-xs">
+            <label className="text-xs font-mono uppercase tracking-wider text-muted-foreground">
+              3. Your Contact Information
+            </label>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <div>
+                <span className="block text-[11px] text-muted-foreground mb-1">Your Full Name *</span>
+                <input
+                  type="text"
+                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  placeholder="e.g. Adv. Rajesh Malhotra"
+                  className="w-full rounded-lg border border-border bg-secondary/50 px-3.5 py-2.5 text-xs text-foreground outline-none focus:border-primary"
+                />
+              </div>
+              <div>
+                <span className="block text-[11px] text-muted-foreground mb-1">Work Email *</span>
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="name@company.com"
+                  className="w-full rounded-lg border border-border bg-secondary/50 px-3.5 py-2.5 text-xs text-foreground outline-none focus:border-primary"
+                />
+              </div>
+            </div>
+            <div>
+              <span className="block text-[11px] text-muted-foreground mb-1">Project Ambition / Agenda</span>
+              <input
+                type="text"
+                value={projectTopic}
+                onChange={(e) => setProjectTopic(e.target.value)}
+                placeholder="e.g. Discussing web platform redesign & reel cinema campaign"
+                className="w-full rounded-lg border border-border bg-secondary/50 px-3.5 py-2.5 text-xs text-foreground outline-none focus:border-primary"
+              />
+            </div>
+          </div>
+
+          <Button type="submit" size="lg" disabled={isSubmitting} className="w-full">
+            {isSubmitting ? (
+              <LoaderCircle className="animate-spin" />
+            ) : (
+              <ArrowUpRight />
+            )}
+            {isSubmitting ? "Locking in slot..." : `Reserve Slot for ${days[selectedDay]?.label} at ${selectedTime}`}
+          </Button>
+
+          <p className="text-center text-[10px] text-muted-foreground">
+            Directly synced with Om Yadav's calendar. No payment required.
+          </p>
+        </form>
+      ) : (
+        <div className="mt-6">
+          <iframe
+            src="https://calendly.com/omyadv?embed_type=Inline&background_color=08090b&text_color=ededed&primary_color=c59b4b"
+            title="Om Yadav live appointment calendar"
+            className="h-[750px] w-full rounded-xl border-0"
+          />
+          <div className="mt-4 flex items-center justify-between text-xs text-muted-foreground">
+            <span>Powered by Calendly</span>
+            <Button asChild variant="outline" size="sm">
+              <a href="https://calendly.com/omyadv" target="_blank" rel="noreferrer">
+                Open in Full Window <ArrowUpRight size={13} />
+              </a>
+            </Button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }

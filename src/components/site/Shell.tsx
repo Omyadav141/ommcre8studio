@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { studio } from "@/lib/site";
@@ -34,7 +34,7 @@ export function Loader() {
     return () => cancelAnimationFrame(raf);
   }, []);
   if (!show) return null;
-  const word = pct < 70 ? "OM YADAV" : "OMCRE8 STUDIO";
+  const word = pct < 70 ? "OM YADAV" : "OMMCRE8";
   return (
     <div aria-hidden className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-background transition-opacity duration-500 ${out ? "opacity-0" : "opacity-100"}`}>
       <div className="flex text-2xl font-medium tracking-[0.3em] md:text-4xl">
@@ -53,24 +53,51 @@ export function Loader() {
 export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+
   useEffect(() => {
     const f = () => setScrolled(window.scrollY > 8);
     f(); window.addEventListener("scroll", f, { passive: true });
     return () => window.removeEventListener("scroll", f);
   }, []);
+
   return (
     <header className="sticky top-3 z-50 px-3">
-      <div className={`mx-auto max-w-5xl rounded-lg transition-all ${scrolled || open ? "glass-card bg-card/90" : "glass-card"}`}>
+      <div className={`mx-auto max-w-5xl rounded-xl transition-all duration-300 border border-white/10 ${scrolled || open ? "glass-card bg-[#0A0C10]/95 shadow-[0_8px_30px_rgba(0,0,0,0.85)]" : "glass-card bg-[#0A0C10]/80"}`}>
       <div className="flex h-14 items-center justify-between px-4 md:px-6">
-        <Link to="/" className="text-sm font-semibold tracking-[0.2em]" onClick={() => setOpen(false)}>OMCRE<span className="text-gold">8</span><span className="ml-1.5 text-xs font-normal text-muted-foreground">STUDIO</span></Link>
-        <nav className="hidden items-center gap-7 md:flex" aria-label="Main">
-          {nav.map((n) => (
-            <Link key={n.to} to={n.to} className="text-sm text-muted-foreground transition-colors hover:text-foreground" activeProps={{ className: "text-foreground" }} activeOptions={{ exact: true }}>{n.label}</Link>
-          ))}
+        <Link to="/" className="flex items-center gap-2.5 group select-none py-1" onClick={() => setOpen(false)}>
+          <div className="flex flex-col">
+            <span className="text-base font-black tracking-[0.22em] text-white font-sans leading-none">
+              OMMCRE<span className="text-[#C59B4B]">8</span>
+            </span>
+            <span className="text-[7.5px] font-mono tracking-[0.42em] text-[#C59B4B] uppercase mt-0.5">
+              LETS GROW
+            </span>
+          </div>
+        </Link>
+        <nav className="hidden items-center gap-1.5 md:flex" aria-label="Main">
+          {nav.map((n) => {
+            const isActive = n.to === "/" ? pathname === "/" : pathname.startsWith(n.to);
+            return (
+              <Link
+                key={n.to}
+                to={n.to}
+                className={`relative rounded-full px-3.5 py-1 text-xs font-medium transition-all duration-200 ${
+                  isActive
+                    ? "bg-white/15 text-white font-semibold shadow-[0_0_12px_rgba(255,255,255,0.15)] ring-1 ring-white/30"
+                    : "text-neutral-400 hover:text-white hover:bg-white/5"
+                }`}
+              >
+                {n.label}
+              </Link>
+            );
+          })}
         </nav>
         <div className="flex items-center gap-2">
-          <Button asChild size="sm"><Link to="/book">Book a Call <ArrowUpRight /></Link></Button>
-          <Button variant="ghost" size="icon" className="md:hidden" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} onClick={() => setOpen(!open)}>
+          <Button asChild size="sm" className="bg-[#C59B4B] text-[#08090B] hover:bg-[#D4A359] font-semibold text-xs">
+            <Link to="/book">Book a Call <ArrowUpRight size={14} /></Link>
+          </Button>
+          <Button variant="ghost" size="icon" className="md:hidden text-white" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} onClick={() => setOpen(!open)}>
             {open ? <X size={18} /> : <Menu size={18} />}
           </Button>
         </div>
@@ -78,10 +105,22 @@ export function Header() {
       <div className={`grid overflow-hidden transition-all duration-300 md:hidden ${open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
         <nav className="min-h-0" aria-label="Mobile">
           <div className="flex flex-col px-4 pb-4">
-            {nav.map((n) => (
-              <Link key={n.to} to={n.to} onClick={() => setOpen(false)} className="border-b py-3 text-base last:border-0">{n.label}</Link>
-            ))}
-            <Link to="/faq" onClick={() => setOpen(false)} className="py-3 text-base">FAQ</Link>
+            {nav.map((n) => {
+              const isActive = n.to === "/" ? pathname === "/" : pathname.startsWith(n.to);
+              return (
+                <Link
+                  key={n.to}
+                  to={n.to}
+                  onClick={() => setOpen(false)}
+                  className={`border-b border-white/10 py-3 text-sm transition-colors ${
+                    isActive ? "text-[#C59B4B] font-semibold" : "text-neutral-300"
+                  }`}
+                >
+                  {n.label}
+                </Link>
+              );
+            })}
+            <Link to="/faq" onClick={() => setOpen(false)} className="py-3 text-sm text-neutral-300">FAQ</Link>
           </div>
         </nav>
       </div>
@@ -95,8 +134,17 @@ export function Footer() {
     <footer className="mt-24 bg-ink text-ink-foreground">
       <div className="container-x grid gap-10 py-14 md:grid-cols-4">
         <div className="md:col-span-2">
-          <p className="text-sm font-semibold tracking-[0.2em]">OMCRE<span className="text-gold">8</span> STUDIO</p>
-          <p className="mt-3 max-w-sm text-sm text-muted-foreground">Digital products, brand experiences and creative production. An independent studio founded by {studio.founder}.</p>
+          <div className="flex flex-col select-none">
+            <span className="text-xl font-black tracking-[0.22em] text-foreground font-sans leading-none">
+              OMMCRE<span className="text-gold">8</span>
+            </span>
+            <span className="text-[8.5px] font-mono tracking-[0.42em] text-gold uppercase mt-1">
+              LETS GROW
+            </span>
+          </div>
+          <p className="mt-4 max-w-sm text-xs text-muted-foreground leading-relaxed">
+            Digital products, brand experiences, and creative film production. An independent multidisciplinary studio founded by {studio.founder}.
+          </p>
         </div>
         <div className="flex flex-col gap-2 text-sm">
           <span className="eyebrow mb-1">Studio</span>
