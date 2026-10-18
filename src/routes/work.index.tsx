@@ -11,7 +11,7 @@ export const Route = createFileRoute("/work/")({
   head: () =>
     seo(
       "Work & Flagship Productions — OMCRE8 Studio",
-      "Explore the True Legal Advice platform, cinema showreels, high-fashion e-commerce, and software systems from OMCRE8 Studio."
+      "Explore digital engineering platforms, cinema showreels, high-fashion e-commerce, and bespoke software systems from OMCRE8 Studio."
     ),
   component: Work,
 });

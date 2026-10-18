@@ -38,6 +38,14 @@ export default defineConfig(async ({ command }) => {
         "@tanstack/query-core",
       ],
     },
+    server: {
+      proxy: {
+        "/api": {
+          target: "http://localhost:4000",
+          changeOrigin: true,
+        },
+      },
+    },
     plugins,
   };
 });

@@ -7,32 +7,34 @@ import {
   Bot,
   User,
   ArrowUpRight,
-  Calculator,
-  Calendar,
-  Layers,
-  ChevronDown,
   Minimize2,
   Maximize2,
   RefreshCw,
 } from "lucide-react";
-import { studio, services, projects } from "@/lib/site";
-import { Button } from "@/components/ui/button";
+import { studio } from "@/lib/site";
 
-interface Message {
+export interface ActionChip {
+  label: string;
+  url?: string;
+  prompt?: string;
+  action?: () => void;
+}
+
+export interface Message {
   id: string;
   sender: "user" | "assistant";
   text: string;
   timestamp: Date;
-  actions?: { label: string; url?: string; action?: () => void }[] | undefined;
+  actions?: ActionChip[] | undefined;
 }
 
 const quickPrompts = [
-  "What does OMCRE8 Studio do?",
-  "How was True Legal Advice built?",
-  "Estimate my project cost & time",
+  "What services does OMCRE8 Studio offer?",
+  "What tech stack & frameworks do you use?",
+  "What are your project pricing & timelines?",
   "Tell me about founder Om Yadav",
+  "How does your cinema & reel production work?",
   "How do I book a discovery call?",
-  "What are your video production capabilities?",
 ];
 
 export function AiAssistant() {
@@ -44,12 +46,13 @@ export function AiAssistant() {
     {
       id: "initial",
       sender: "assistant",
-      text: `Hello! I'm the **OMCRE8 Studio AI Assistant**. I can help you explore our services, understand our work (like the **True Legal Advice** platform), estimate your project budget, or connect you directly with founder **${studio.founder}**. What are you looking to create?`,
+      text: `Hello! I'm the **OMCRE8 Studio AI Assistant**. I'm here to directly answer your questions about our software engineering, digital architecture, brand systems, cinema production, pricing packages, and how founder **${studio.founder}** and our team build high-scale digital products.\n\nWhat can I answer for you today?`,
       timestamp: new Date(),
       actions: [
-        { label: "⚡ Estimate Project", url: "/#estimator" },
-        { label: "📅 Book Call with Om", url: "/book" },
-        { label: "📁 View True Legal Advice", url: "/work/true-legal-advice" },
+        { label: "⚡ Pricing & Timelines", prompt: "What are your project pricing and timelines?" },
+        { label: "🛠️ Tech Stack & Architecture", prompt: "What tech stack and frameworks do you use?" },
+        { label: "🎥 Cinema & Viral Reels", prompt: "Tell me about your video production and viral reels capabilities" },
+        { label: "📅 Book Discovery Call", url: "/book" },
       ],
     },
   ]);
@@ -64,83 +67,331 @@ export function AiAssistant() {
     }
   }, [isOpen, messages, isTyping]);
 
-  const generateLocalResponse = (prompt: string): { text: string; actions?: { label: string; url?: string; action?: () => void }[] | undefined } => {
+  const generateLocalResponse = (prompt: string): { text: string; actions?: ActionChip[] | undefined } => {
     const q = prompt.toLowerCase();
 
-    // True Legal Advice
-    if (q.includes("true legal") || q.includes("trulegaladvice") || q.includes("legal")) {
+    // 1. Tech Stack & Frameworks
+    if (
+      q.includes("tech") ||
+      q.includes("stack") ||
+      q.includes("framework") ||
+      q.includes("react") ||
+      q.includes("typescript") ||
+      q.includes("next") ||
+      q.includes("node") ||
+      q.includes("database") ||
+      q.includes("backend") ||
+      q.includes("architecture") ||
+      q.includes("code")
+    ) {
       return {
-        text: `**True Legal Advice** (trulegaladvice.com) is one of our flagship case studies. We engineered an authoritative, accessible legal advisory portal for Indian corporate law, trademark registration, and civil consultations.\n\nKey highlights:\n• Fast sub-second page loads (<0.8s LCP)\n• 44% increase in consultation inquiries\n• Built with React 19, TypeScript, and high-conversion appointment booking funnels.`,
+        text: `Here is the production-grade technology architecture OMCRE8 Studio builds with:
+
+• **Frontend Engineering**: React 19, TypeScript, Next.js 15, TanStack Start & Router, Tailwind CSS v4, Lucide icons, and Framer Motion micro-interactions.
+• **Backend & Data**: Node.js, Express, PostgreSQL, Drizzle ORM, Supabase, Redis edge caching, and high-concurrency REST/JSON APIs with strict Zod schema validation.
+• **Performance Benchmarks**: Sub-second Largest Contentful Paint (<0.8s LCP), zero layout shifts (CLS <0.05), and WCAG AA accessibility compliance.
+• **Cinema & Post-Production Suite**: Sony FX3 & RED cinema rigs, G-Master cinema primes, DaVinci Resolve Studio color grading, and broadcast sound engineering.
+• **AI & Automations**: Custom RAG (Retrieval-Augmented Generation) knowledge bases, OpenAI GPT-4o & Google Gemini LLM API orchestration.
+
+Would you like to discuss how we would architect your specific platform?`,
         actions: [
-          { label: "Read Case Study", url: "/work/true-legal-advice" },
-          { label: "Visit Live Site", url: "https://trulegaladvice.com/" },
+          { label: "⚡ Project Pricing & Timelines", prompt: "What are your project pricing and timelines?" },
+          { label: "📱 Do you build mobile apps?", prompt: "Tell me about your mobile app development capabilities" },
+          { label: "📅 Book Discovery Call", url: "/book" },
         ],
       };
     }
 
-    // Founder / Om Yadav
-    if (q.includes("om yadav") || q.includes("founder") || q.includes("who founded") || q.includes("who is")) {
+    // 2. Pricing, Budgets & Timelines
+    if (
+      q.includes("cost") ||
+      q.includes("price") ||
+      q.includes("pricing") ||
+      q.includes("estimate") ||
+      q.includes("budget") ||
+      q.includes("rate") ||
+      q.includes("fee") ||
+      q.includes("how much")
+    ) {
       return {
-        text: `**${studio.founder}** is the founder, technology architect, and creative director of OMCRE8 Studio (OM CREATE STUDIO). Om directs an independent multidisciplinary practice personally guiding software architecture, brand systems, cinema production, and viral growth.\n\nYou can explore his personal portfolio at [omyadav.online](${studio.personalSite}) or book a direct discovery call with him.`,
-        actions: [
-          { label: "Meet Om Yadav", url: "/founder" },
-          { label: "Book a Call with Om", url: "/book" },
-          { label: "Om's Personal Site", url: studio.personalSite },
-        ],
-      };
-    }
+        text: `We operate with transparent, milestone-based pricing tailored to your project scope:
 
-    // Estimate / Cost / Pricing / Budget
-    if (q.includes("cost") || q.includes("price") || q.includes("estimate") || q.includes("pricing") || q.includes("budget") || q.includes("fee") || q.includes("rate")) {
-      return {
-        text: `Our projects are tailored to your scope:\n\n• **Websites & Landing Pages**: from ₹45,000 (2–4 weeks)\n• **Custom Software & Portals**: from ₹1,20,000 (4–8 weeks)\n• **E-Commerce Stores**: from ₹65,000 (3–5 weeks)\n• **Mobile Apps**: from ₹1,50,000 (6–10 weeks)\n• **Film & Video Production**: from ₹75,000 (2–4 weeks)\n• **Video Editing & Post**: from ₹25,000\n• **Social Media Retainers**: from ₹30,000/mo\n\nTry our interactive estimator tool or get an exact proposal!`,
+• **Websites & High-Conversion Landing Pages**: ₹45,000 – ₹85,000 ($600 – $1,100 USD) · 2–3 weeks delivery
+• **Custom Web Applications & SaaS Dashboards**: ₹1,20,000 – ₹2,50,000 ($1,500 – $3,200 USD) · 4–8 weeks delivery
+• **E-Commerce Platforms & Storefronts**: ₹65,000 – ₹1,40,000 ($850 – $1,800 USD) · 3–5 weeks delivery
+• **Cross-Platform Mobile Apps (iOS & Android)**: from ₹1,50,000 ($1,900+ USD) · 6–10 weeks delivery
+• **Cinema Brand Films & Commercials**: ₹75,000 – ₹1,80,000 ($950 – $2,300 USD) · 2–4 weeks delivery
+• **Video Editing & Hollywood DaVinci Color**: ₹25,000 – ₹60,000 ($350 – $750 USD) · 1–2 weeks delivery
+• **Viral Reels & Social Growth Retainer**: ₹30,000 – ₹65,000/month ($400 – $800/mo) · Ongoing
+
+**Milestone Terms**: 40% project kickoff, 30% interactive prototype/alpha approval, and 30% final staging & production launch. All source code, design systems, and commercial IP rights are 100% yours upon delivery.`,
         actions: [
           { label: "⚡ Use Interactive Estimator", url: "/#estimator" },
-          { label: "Submit Project Brief", url: "/contact" },
+          { label: "🔄 What is your development process?", prompt: "How does your development and design process work?" },
+          { label: "📅 Book Discovery Call with Om", url: "/book" },
         ],
       };
     }
 
-    // Booking / Call / Meeting
-    if (q.includes("book") || q.includes("call") || q.includes("meeting") || q.includes("calendly") || q.includes("schedule") || q.includes("talk")) {
+    // 3. Services & Capabilities
+    if (
+      q.includes("service") ||
+      q.includes("what do you do") ||
+      q.includes("capabilities") ||
+      q.includes("offer") ||
+      q.includes("what can you do") ||
+      q.includes("what does") ||
+      q.includes("pillar")
+    ) {
       return {
-        text: `You can schedule a direct 20-minute discovery call with **${studio.founder}** on our live booking calendar. We'll discuss your goals, scope, timeline, and recommended technical approach.`,
+        text: `OMCRE8 Studio is an independent multidisciplinary practice uniting 4 core pillars:
+
+• **1. Digital Engineering & Architecture**: Custom React 19 & Next.js applications, high-concurrency REST APIs, sub-second edge performance, WCAG AA compliance, and custom SaaS dashboards.
+• **2. Brand Identity & Visual Systems**: Typography systems, design tokens, interactive Figma UI/UX prototyping, and conversion-focused user journeys.
+• **3. Cinema & Viral Video Production**: 4K commercial films, executive documentary treatments, and viral vertical 9:16 reels (with verified records of 992K+ and 178K+ views), graded in Hollywood DaVinci Resolve Studio.
+• **4. Marketing & Audience Growth**: Data-backed social distribution, high-intent technical SEO, and conversion analytics.
+
+Every engagement is personally architected and directed by founder Om Yadav.`,
+        actions: [
+          { label: "🛠️ What tech stack do you use?", prompt: "What tech stack and frameworks do you use?" },
+          { label: "💰 View Pricing & Timelines", prompt: "What are your project pricing and timelines?" },
+          { label: "📁 View Portfolio Work", url: "/work" },
+        ],
+      };
+    }
+
+    // 4. Founder Om Yadav
+    if (
+      q.includes("om yadav") ||
+      q.includes("founder") ||
+      q.includes("who founded") ||
+      q.includes("who is") ||
+      q.includes("director") ||
+      q.includes("who runs")
+    ) {
+      return {
+        text: `**${studio.founder}** is the founder, technology architect, and creative director of OMCRE8 Studio (OM CREATE STUDIO).
+
+• **Multidisciplinary Leadership**: Om personally directs both sides of the studio—writing high-craft code and directing cinematic shoots.
+• **Hands-On Client Model**: We don't employ junior account managers or sales middlemen. When you work with OMCRE8 Studio, Om personally architects your codebase and creative vision.
+• **Personal Portfolio**: You can explore Om's personal work and background at [omyadav.online](${studio.personalSite}) or reach him directly via email at \`${studio.email}\`.
+
+Would you like to schedule a direct 20-minute video discovery consultation with Om?`,
+        actions: [
+          { label: "📅 Book 20-Min Call with Om", url: "/book" },
+          { label: "🌐 Visit omyadav.online", url: studio.personalSite },
+          { label: "⚡ View Project Pricing", prompt: "What are your project pricing and timelines?" },
+        ],
+      };
+    }
+
+    // 5. Video, Cinema & Viral Reels Production
+    if (
+      q.includes("video") ||
+      q.includes("film") ||
+      q.includes("reel") ||
+      q.includes("cinema") ||
+      q.includes("shoot") ||
+      q.includes("camera") ||
+      q.includes("color") ||
+      q.includes("davinci") ||
+      q.includes("production") ||
+      q.includes("editing")
+    ) {
+      return {
+        text: `At OMCRE8 Studio, cinema is in our DNA. We merge engineering with high-craft video production:
+
+• **Viral Vertical Reels**: We write hook-first scripts and shoot 9:16 vertical content optimized for Instagram algorithms. Our client reels have achieved 992,000+ views and 178,000+ organic views.
+• **Commercial Brand Films**: 4K widescreen cinematic narratives showcasing your brand, products, or corporate leadership.
+• **Hollywood Post-Production**: Full color grading in DaVinci Resolve Studio, custom sound design, pacing choreography, and dynamic typography animations.
+• **In-Chamber & On-Location Shoots**: Professional cinema lighting rigs, wireless Sennheiser audio, and Sony FX3/RED camera packages.
+
+Would you like to explore video production pricing or book a consultation?`,
+        actions: [
+          { label: "💰 View Video & Reel Pricing", prompt: "What are your project pricing and timelines?" },
+          { label: "🎬 View Client Reels Strip", url: "/#reels" },
+          { label: "📅 Book Call with Om", url: "/book" },
+        ],
+      };
+    }
+
+    // 6. Process, Workflow & Timelines
+    if (
+      q.includes("process") ||
+      q.includes("workflow") ||
+      q.includes("timeline") ||
+      q.includes("turnaround") ||
+      q.includes("how long") ||
+      q.includes("how do you work") ||
+      q.includes("how it works") ||
+      q.includes("steps")
+    ) {
+      return {
+        text: `Our projects follow a disciplined 4-phase agile delivery framework:
+
+• **Phase 1: Discovery & Technical Architecture (Days 1–3)**: Scoping user journeys, drafting schema contracts, and choosing the optimal tech stack.
+• **Phase 2: High-Fidelity Design & Prototyping (Week 1–2)**: Creating interactive Figma prototypes, design tokens, and typography scales for your review.
+• **Phase 3: Sprint Engineering & Shoots (Weeks 2–6)**: Weekly milestone demos on live staging environments, iterative feedback, and video filming.
+• **Phase 4: QA, Motion Polish & Production Deployment (Week 6+)**: Comprehensive Lighthouse audits (>95 score, <0.8s LCP), cross-browser verification, and zero-downtime launch.
+
+We also offer post-launch maintenance and continuous feature iteration retainers.`,
+        actions: [
+          { label: "💰 View Project Pricing", prompt: "What are your project pricing and timelines?" },
+          { label: "🛠️ What tech stack do you use?", prompt: "What tech stack and frameworks do you use?" },
+          { label: "📅 Book Discovery Call", url: "/book" },
+        ],
+      };
+    }
+
+    // 7. Mobile Apps & Cross-Platform
+    if (
+      q.includes("mobile") ||
+      q.includes("app") ||
+      q.includes("ios") ||
+      q.includes("android") ||
+      q.includes("react native") ||
+      q.includes("flutter")
+    ) {
+      return {
+        text: `We develop high-performance cross-platform mobile apps for iOS and Android:
+
+• **Technologies**: React Native, Flutter, Expo, TypeScript, and native Swift/Kotlin bridge modules.
+• **Key Capabilities**: 60fps gesture-driven animations, offline-first data sync (WatermelonDB/SQLite), push notifications, biometric authentication (Face ID/Touch ID), and camera/audio integrations.
+• **App Store Release**: We handle end-to-end App Store and Google Play submissions, compliance verification, and over-the-air updates.
+
+Pricing starts from ₹1,50,000 ($1,900+ USD) depending on API complexity and integrations.`,
+        actions: [
+          { label: "⚡ Calculate in Estimator", url: "/#estimator" },
+          { label: "🛠️ What is your web tech stack?", prompt: "What tech stack and frameworks do you use?" },
+          { label: "📅 Book Discovery Call", url: "/book" },
+        ],
+      };
+    }
+
+    // 8. E-Commerce & Storefronts
+    if (
+      q.includes("ecommerce") ||
+      q.includes("e-commerce") ||
+      q.includes("store") ||
+      q.includes("shopify") ||
+      q.includes("shop") ||
+      q.includes("checkout") ||
+      q.includes("payment") ||
+      q.includes("stripe") ||
+      q.includes("razorpay")
+    ) {
+      return {
+        text: `We build modern digital storefronts designed for high conversion and low drop-off:
+
+• **Architectures**: Headless React / Next.js e-commerce connected to Shopify, Medusa, or custom Node.js/PostgreSQL backends.
+• **Key Features**: Instant slide-out carts, editorial lookbook discovery, dynamic currency conversions, one-tap checkout, and integrated Stripe/Razorpay payment gateways.
+• **Performance**: <0.8s page loads and optimized product catalog filtering, resulting in +30% to +50% conversion improvements over standard templates.`,
+        actions: [
+          { label: "⚡ Project Pricing", prompt: "What are your project pricing and timelines?" },
+          { label: "📁 View Portfolio", url: "/work" },
+          { label: "📅 Book Discovery Call", url: "/book" },
+        ],
+      };
+    }
+
+    // 9. AI Integrations & Automations
+    if (
+      q.includes("ai") ||
+      q.includes("bot") ||
+      q.includes("gpt") ||
+      q.includes("gemini") ||
+      q.includes("llm") ||
+      q.includes("rag") ||
+      q.includes("automation") ||
+      q.includes("agent")
+    ) {
+      return {
+        text: `We engineer production-ready AI workflows and autonomous agent systems:
+
+• **RAG Knowledge Bases**: Custom retrieval-augmented generation systems allowing chatbots to answer questions based strictly on your company documents or product catalog.
+• **LLM Integrations**: OpenAI GPT-4o, Anthropic Claude, and Google Gemini API integrations with prompt caching and latency optimization.
+• **Automated Workflows**: Smart customer lead qualification, automated email routing, and intelligent CRM data sync.
+• **Privacy-First**: Zero client data training retention and encrypted data storage.`,
+        actions: [
+          { label: "⚡ View Pricing", prompt: "What are your project pricing and timelines?" },
+          { label: "🛠️ Full Tech Stack", prompt: "What tech stack and frameworks do you use?" },
+          { label: "📅 Book Call with Om", url: "/book" },
+        ],
+      };
+    }
+
+    // 10. Booking, Contact & Calls
+    if (
+      q.includes("book") ||
+      q.includes("call") ||
+      q.includes("meeting") ||
+      q.includes("calendly") ||
+      q.includes("schedule") ||
+      q.includes("contact") ||
+      q.includes("hire") ||
+      q.includes("email") ||
+      q.includes("phone")
+    ) {
+      return {
+        text: `You can schedule a direct 20-minute video discovery consultation with **${studio.founder}**:
+
+• **What we discuss**: Your project goals, technical requirements, timeline constraints, budget scoping, and recommended architecture.
+• **Booking Link**: Visit [/book](/book) to select a time that fits your calendar.
+• **Direct Email**: You can also write to Om directly at \`${studio.email}\` or submit a brief at [/contact](/contact).`,
         actions: [
           { label: "📅 Open Live Calendar", url: "/book" },
-          { label: "✉️ Email Directly", url: `mailto:${studio.email}` },
+          { label: "✉️ Submit Project Brief", url: "/contact" },
+          { label: "⚡ Estimate Project Cost", url: "/#estimator" },
         ],
       };
     }
 
-    // Video / Film / Production / Reels
-    if (q.includes("video") || q.includes("film") || q.includes("reel") || q.includes("cinema") || q.includes("production") || q.includes("shoot") || q.includes("edit")) {
+    // 11. True Legal Advice (Handled factually without dominating)
+    if (q.includes("true legal") || q.includes("trulegaladvice") || q.includes("legal")) {
       return {
-        text: `At OMCRE8, film is in our DNA. We don't just write code; we direct, shoot, and edit cinematic brand films, high-retention Instagram reels, commercial ads, and product launch cinema.\n\nOur post-production pipeline includes DaVinci Resolve color grading, custom sound design, and vertical cuts tailored for social platforms.`,
+        text: `**True Legal Advice** (trulegaladvice.com) is one of our client case studies where OMCRE8 Studio engineered an accessible legal discovery platform and produced viral client reels reaching 992K+ views.
+
+While legal tech was one of our successful client projects, OMCRE8 Studio works across diverse industries—including SaaS software, luxury e-commerce, commercial cinema, and fintech platforms.`,
         actions: [
-          { label: "Explore Production", url: "/production" },
-          { label: "View Showreels", url: "/work" },
+          { label: "📁 View Portfolio Case Studies", url: "/work" },
+          { label: "🛠️ What tech stack do you use?", prompt: "What tech stack and frameworks do you use?" },
+          { label: "💰 View Pricing & Timelines", prompt: "What are your project pricing and timelines?" },
         ],
       };
     }
 
-    // Services / Capabilities
-    if (q.includes("service") || q.includes("what do you do") || q.includes("capabilities") || q.includes("offer") || q.includes("stack")) {
+    // 12. Greetings
+    if (
+      q === "hi" ||
+      q === "hello" ||
+      q === "hey" ||
+      q.startsWith("hi ") ||
+      q.startsWith("hello ") ||
+      q.startsWith("hey ")
+    ) {
       return {
-        text: `OMCRE8 Studio covers the complete digital & creative spectrum across 4 pillars:\n\n1. **Build**: Web development, Custom software, E-commerce, Mobile apps, APIs & Backend.\n2. **Design**: UI/UX design, Brand identity, Creative strategy, Design systems.\n3. **Produce**: Brand films, Cinematography, Commercial editing, Color & Sound.\n4. **Grow**: Instagram & Reels management, Meta/Google ads, SEO, Content shoots.`,
+        text: `Hello! Welcome to OMCRE8 Studio. I'm here to directly answer any questions about our digital engineering services, mobile apps, cinema production, pricing, tech stack, or booking a discovery call with founder Om Yadav.\n\nWhat can I help you explore?`,
         actions: [
-          { label: "View All 15 Services", url: "/services" },
-          { label: "Start a Project", url: "/contact" },
+          { label: "⚡ Project Pricing & Timelines", prompt: "What are your project pricing and timelines?" },
+          { label: "🛠️ Tech Stack & Architecture", prompt: "What tech stack and frameworks do you use?" },
+          { label: "🎥 Cinema & Viral Reels", prompt: "Tell me about your video production and viral reels capabilities" },
+          { label: "📅 Book Discovery Call", url: "/book" },
         ],
       };
     }
 
-    // Default intelligent answer
+    // 13. Default intelligent answer
     return {
-      text: `Thanks for asking! OMCRE8 Studio is an independent multidisciplinary studio led by **${studio.founder}** with a 20-person core team. We merge high-craft engineering (React, TypeScript, cloud software) with cinematic film production and growth marketing.\n\nWould you like to scope a project, explore our case studies (like True Legal Advice), or book a discovery meeting?`,
+      text: `Thanks for asking! OMCRE8 Studio is an independent multidisciplinary practice directed by **${studio.founder}**. We unite software architecture (React 19, TypeScript, cloud APIs, microservices) with cinematic film production, brand identity systems, and viral social growth.
+
+Every project is delivered with sub-second performance, meticulous attention to detail, and direct founder collaboration.
+
+Would you like me to estimate your project cost, explain our tech stack, or help you book a discovery call?`,
       actions: [
-        { label: "📅 Book a Discovery Call", url: "/book" },
-        { label: "⚡ Calculate Project Cost", url: "/#estimator" },
-        { label: "📁 Explore Portfolio", url: "/work" },
+        { label: "⚡ View Pricing & Timelines", prompt: "What are your project pricing and timelines?" },
+        { label: "🛠️ What tech stack do you use?", prompt: "What tech stack and frameworks do you use?" },
+        { label: "🎥 Video & Reels Capabilities", prompt: "Tell me about your video production and viral reels capabilities" },
+        { label: "📅 Book Discovery Call with Om", url: "/book" },
       ],
     };
   };
@@ -201,7 +452,7 @@ export function AiAssistant() {
         },
       ]);
       setIsTyping(false);
-    }, 450);
+    }, 350);
   };
 
   return (
@@ -245,7 +496,7 @@ export function AiAssistant() {
           className={`fixed bottom-22 right-5 z-40 flex flex-col overflow-hidden rounded-2xl border border-primary/30 bg-card/95 shadow-2xl backdrop-blur-xl transition-all duration-200 ${
             isExpanded
               ? "h-[85vh] w-[92vw] max-w-2xl sm:h-[650px] sm:w-[580px]"
-              : "h-[560px] w-[92vw] max-w-sm sm:w-[410px]"
+              : "h-[560px] w-[92vw] max-w-sm sm:w-[420px]"
           }`}
         >
           {/* Header */}
@@ -259,14 +510,14 @@ export function AiAssistant() {
                   <span className="text-xs font-semibold tracking-wider">CRE8 STUDIO AI</span>
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-500"></span>
                 </div>
-                <p className="text-[10px] text-muted-foreground">Om Yadav & Team Intelligence</p>
+                <p className="text-[10px] text-muted-foreground">Om Yadav & Studio Intelligence</p>
               </div>
             </div>
 
             <div className="flex items-center gap-1 text-muted-foreground">
               <button
                 onClick={() => setIsExpanded(!isExpanded)}
-                className="hidden rounded p-1 hover:bg-secondary hover:text-foreground sm:block"
+                className="hidden rounded p-1 hover:bg-secondary hover:text-foreground sm:block cursor-pointer"
                 title={isExpanded ? "Collapse" : "Expand"}
               >
                 {isExpanded ? <Minimize2 size={15} /> : <Maximize2 size={15} />}
@@ -279,17 +530,22 @@ export function AiAssistant() {
                       sender: "assistant",
                       text: "Chat refreshed. How can I help you today?",
                       timestamp: new Date(),
+                      actions: [
+                        { label: "⚡ Pricing & Timelines", prompt: "What are your project pricing and timelines?" },
+                        { label: "🛠️ Tech Stack", prompt: "What tech stack and frameworks do you use?" },
+                        { label: "📅 Book Discovery Call", url: "/book" },
+                      ],
                     },
                   ]);
                 }}
-                className="rounded p-1 hover:bg-secondary hover:text-foreground"
+                className="rounded p-1 hover:bg-secondary hover:text-foreground cursor-pointer"
                 title="Reset conversation"
               >
                 <RefreshCw size={15} />
               </button>
               <button
                 onClick={() => setIsOpen(false)}
-                className="rounded p-1 hover:bg-secondary hover:text-foreground"
+                className="rounded p-1 hover:bg-secondary hover:text-foreground cursor-pointer"
                 title="Close"
               >
                 <X size={16} />
@@ -321,7 +577,7 @@ export function AiAssistant() {
                     {m.text.split("\n").map((line, i) => {
                       if (line.startsWith("• ")) {
                         return (
-                          <div key={i} className="my-0.5 pl-2 font-normal text-muted-foreground">
+                          <div key={i} className="my-1 pl-2 font-normal text-muted-foreground">
                             • {line.slice(2)}
                           </div>
                         );
@@ -334,29 +590,50 @@ export function AiAssistant() {
                     })}
                   </div>
 
-                  {/* Action suggestions */}
+                  {/* Action suggestions / interactive follow-up chips */}
                   {m.actions && m.actions.length > 0 && (
                     <div className="mt-3 flex flex-wrap gap-1.5 border-t border-border/40 pt-2.5">
-                      {m.actions.map((act, idx) => (
-                        act.url ? (
-                          <Link
-                            key={idx}
-                            to={act.url}
-                            onClick={() => setIsOpen(false)}
-                            className="inline-flex items-center gap-1 rounded-md border border-primary/40 bg-primary/10 px-2 py-1 text-[11px] font-medium text-foreground transition-colors hover:bg-primary/20"
-                          >
-                            {act.label} <ArrowUpRight size={11} />
-                          </Link>
-                        ) : (
+                      {m.actions.map((act, idx) =>
+                        act.prompt ? (
                           <button
                             key={idx}
-                            onClick={act.action}
-                            className="inline-flex items-center gap-1 rounded-md border border-primary/40 bg-primary/10 px-2 py-1 text-[11px] font-medium text-foreground transition-colors hover:bg-primary/20"
+                            type="button"
+                            onClick={() => handleSend(act.prompt)}
+                            className="inline-flex items-center gap-1 rounded-md border border-primary/40 bg-primary/10 px-2.5 py-1 text-[11px] font-medium text-foreground transition-all hover:bg-primary/25 cursor-pointer shadow-sm"
                           >
                             {act.label}
                           </button>
-                        )
-                      ))}
+                        ) : act.action ? (
+                          <button
+                            key={idx}
+                            type="button"
+                            onClick={act.action}
+                            className="inline-flex items-center gap-1 rounded-md border border-primary/40 bg-primary/10 px-2.5 py-1 text-[11px] font-medium text-foreground transition-all hover:bg-primary/25 cursor-pointer"
+                          >
+                            {act.label}
+                          </button>
+                        ) : act.url ? (
+                          act.url.startsWith("/") ? (
+                            <Link
+                              key={idx}
+                              to={act.url}
+                              className="inline-flex items-center gap-1 rounded-md border border-white/15 bg-white/5 px-2.5 py-1 text-[11px] font-medium text-foreground transition-all hover:bg-white/15 hover:border-primary/50"
+                            >
+                              {act.label} <ArrowUpRight size={11} />
+                            </Link>
+                          ) : (
+                            <a
+                              key={idx}
+                              href={act.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 rounded-md border border-white/15 bg-white/5 px-2.5 py-1 text-[11px] font-medium text-foreground transition-all hover:bg-white/15 hover:border-primary/50"
+                            >
+                              {act.label} <ArrowUpRight size={11} />
+                            </a>
+                          )
+                        ) : null
+                      )}
                     </div>
                   )}
                 </div>
@@ -391,7 +668,7 @@ export function AiAssistant() {
                 <button
                   key={i}
                   onClick={() => handleSend(p)}
-                  className="shrink-0 rounded-full border border-border/80 bg-background/80 px-2.5 py-1 text-muted-foreground transition-colors hover:border-primary hover:text-foreground"
+                  className="shrink-0 rounded-full border border-border/80 bg-background/80 px-2.5 py-1 text-muted-foreground transition-colors hover:border-primary hover:text-foreground cursor-pointer"
                 >
                   {p}
                 </button>
@@ -412,13 +689,13 @@ export function AiAssistant() {
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask about projects, pricing, True Legal Advice..."
+              placeholder="Ask about services, tech stack, pricing, video production..."
               className="flex-1 rounded-lg border border-border/80 bg-secondary/40 px-3 py-2 text-xs outline-none transition-colors focus:border-primary focus:bg-background"
             />
             <button
               type="submit"
               disabled={!input.trim() || isTyping}
-              className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-40"
+              className="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-40 cursor-pointer"
             >
               <Send size={14} />
             </button>

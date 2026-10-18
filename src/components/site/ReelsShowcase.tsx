@@ -234,31 +234,31 @@ export function ReelsShowcase() {
               }}
             >
               <InstagramIcon size={14} />
-              <span>Real Advocate Reels · 992K+ & 178K+ Views</span>
+              <span>OMCRE8 CINEMA & VIRAL REELS · 992K+ & 178K+ VIEWS</span>
             </div>
 
-            <h2 className="text-2xl md:text-4xl font-serif font-bold text-white tracking-tight flex items-center gap-3">
-              <span>Follow @true_legal_advice</span>
+            <h2 className="text-2xl md:text-4xl font-serif font-bold text-white tracking-tight flex flex-wrap items-center gap-3">
+              <span>Viral Social Cinema & Reels Production</span>
               <span className="inline-flex items-center gap-1 text-xs font-mono px-2.5 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30">
                 <Flame size={12} className="text-rose-400" />
-                <span>Viral Reels</span>
+                <span>992K+ Views</span>
               </span>
             </h2>
 
-            <p className="mt-2 text-xs sm:text-sm text-neutral-300 max-w-xl leading-relaxed">
-              Courtroom insights, consultation cases, trademark guidance, and legal reels from Adv. Shareen Hussain. Click any reel to play directly on the page.
+            <p className="mt-2 text-xs sm:text-sm text-neutral-300 max-w-2xl leading-relaxed">
+              High-hook scripting, cinematic camera direction, and Hollywood DaVinci Resolve color grading engineered by OMCRE8 Studio for viral client reach. Click any reel to play directly on the page.
             </p>
           </div>
 
           <a
-            href="https://www.instagram.com/true_legal_advice/"
+            href="https://www.instagram.com/true_legal_advice/reels/"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-xs font-bold text-white no-underline transition-all hover:scale-105 hover:shadow-lg shadow-md cursor-pointer shrink-0"
             style={{ background: "linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888)" }}
           >
             <InstagramIcon size={14} />
-            <span>Follow on Instagram</span>
+            <span>Watch Client Campaign</span>
             <ExternalLink size={12} />
           </a>
         </div>

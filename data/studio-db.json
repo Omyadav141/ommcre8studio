@@ -1,6 +1,26 @@
 {
   "inquiries": [
     {
+      "id": "inq-1792335659301-91",
+      "reference": "OCS-2026-4996",
+      "status": "reviewing",
+      "createdAt": "2026-10-18T15:00:59.301Z",
+      "updatedAt": "2026-10-18T15:00:59.335Z",
+      "name": "Test Client",
+      "email": "testclient@example.com",
+      "phone": "+91 99999 88888",
+      "company": "Venture Corp",
+      "website": "https://venture.example.com",
+      "service": "web-development",
+      "title": "New Flagship Web Portal",
+      "description": "We require a high performance web application with booking funnel and dark cinematic aesthetic.",
+      "budget": "₹75,000 – ₹2,00,000",
+      "timeline": "Within 1 month",
+      "contactPref": "Email",
+      "consent": true,
+      "notes": "Reviewed by Om Yadav. Follow up scheduled."
+    },
+    {
       "id": "inq-1792330984230-950",
       "reference": "OCS-2026-2398",
       "status": "reviewing",
@@ -175,6 +195,22 @@
     }
   ],
   "aiLogs": [
+    {
+      "id": "ailog-1792335659369",
+      "timestamp": "2026-10-18T15:00:59.369Z",
+      "sessionId": "default",
+      "userPrompt": "Who is Om Yadav?",
+      "assistantReply": "**Om Yadav** is the founder, technology architect, and creative director of OMCRE8 Studio (OM CREATE STUDIO). Directing an independent multidisciplinary practice, Om personally oversees strategy, architecture, cinematography, and client growth.\n\nYou can explore his personal portfolio at omyadav.online or book a direct discovery meeting with him.",
+      "intent": "founder_inquiry"
+    },
+    {
+      "id": "ailog-1792335659353",
+      "timestamp": "2026-10-18T15:00:59.353Z",
+      "sessionId": "default",
+      "userPrompt": "Tell me about the True Legal Advice project",
+      "assistantReply": "**True Legal Advice** (trulegaladvice.com) is one of OMCRE8 Studio's client platforms. We transformed a traditional legal information service into an ultra-fast, high-converting digital advisory portal.\n\n• **Core Results**: <0.8s LCP page load, +44% increase in consultation inquiries, and a 31% reduction in mobile bounce rate.\n• **Tech Stack**: React 19, TypeScript, Tailwind CSS, TanStack Start, and encrypted inquiries schema.",
+      "intent": "case_study_legal"
+    },
     {
       "id": "ailog-1792330984275",
       "timestamp": "2026-10-18T13:43:04.275Z",

@@ -48,7 +48,7 @@ function About() {
                 <strong className="text-white">OMMCRE8 Studio</strong> is the independent practice of <strong className="text-white">{studio.founder}</strong>. Rather than running a bloated agency with endless account managers, Om works hands-on as your principal technology architect, visual designer, and film director.
               </p>
               <p>
-                We engineer custom digital platforms from the ground up—like our flagship client platform <strong className="text-white">True Legal Advice (trulegaladvice.com)</strong>—and scale organic reach through viral short-form cinema reels generating <strong className="text-[#C59B4B]">992,000+ views</strong>.
+                We engineer custom digital platforms, web applications, and high-performance digital commerce systems from the ground up, and scale organic brand reach through viral short-form cinema reels generating <strong className="text-[#C59B4B]">992,000+ views</strong>.
               </p>
             </div>
           </div>

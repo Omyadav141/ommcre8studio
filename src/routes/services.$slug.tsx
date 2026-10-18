@@ -193,24 +193,24 @@ function ServiceDetail() {
         </div>
       </section>
 
-      {/* Flagship Case Study Reference: True Legal Advice */}
+      {/* Flagship Production Showcase */}
       <section className="container-x mt-20">
         <div className="rounded-2xl border border-white/10 bg-[#0A0C10] p-8 md:p-10">
           <div className="flex flex-wrap items-center justify-between gap-6 border-b border-white/10 pb-6">
             <div>
               <span className="font-mono text-xs text-[#C59B4B] uppercase tracking-wider">
-                FLAGSHIP STUDIO PRODUCTION REFERENCE
+                FLAGSHIP STUDIO PORTFOLIO
               </span>
               <h3 className="mt-1 text-2xl font-bold text-white">
-                See this craft applied on True Legal Advice
+                See this craft applied across our client platforms
               </h3>
               <p className="mt-1 text-xs text-slate-300">
-                How OMMCRE8 engineered trulegaladvice.com and scaled their viral Instagram reels to 992K+ views.
+                Explore our full-stack web platforms, design systems, and viral cinema reels generating 992K+ views.
               </p>
             </div>
             <Button asChild variant="outline" className="border-white/20 text-white hover:bg-white/10 text-xs">
-              <Link to="/work/$slug" params={{ slug: "true-legal-advice" }}>
-                Explore Case Study Breakdown <ArrowUpRight size={14} />
+              <Link to="/work">
+                Explore All Portfolio Case Studies <ArrowUpRight size={14} />
               </Link>
             </Button>
           </div>

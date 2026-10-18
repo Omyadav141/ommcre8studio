@@ -89,71 +89,69 @@ const capabilities = [
 ];
 
 function Index() {
-  const trueLegal = projects.find((p) => p.slug === "true-legal-advice") ?? projects[0]!;
-
   return (
     <>
       {/* Hero Section with Accenture-style Vector Illustration */}
-      <section className="relative isolate mt-3 overflow-hidden border-b">
-        <div className="container-x pt-14 pb-12 md:pt-20 md:pb-16">
-          <div className="grid gap-12 lg:grid-cols-12 items-center">
+      <section className="relative isolate mt-2 overflow-hidden border-b">
+        <div className="container-x pt-6 pb-8 md:pt-10 md:pb-10 lg:pt-12 lg:pb-12">
+          <div className="grid gap-8 lg:grid-cols-12 items-center">
             {/* Left Column: Headlines & Actions */}
-            <div className="lg:col-span-7">
-              <div className="mb-6 flex items-center gap-3 text-xs text-muted-foreground">
-                <span className="h-px w-8 bg-primary" />
-                <span>OMCRE8 STUDIO / INDEPENDENT DIGITAL & CINEMA</span>
+            <div className="lg:col-span-6 space-y-4 md:space-y-5">
+              <div className="flex items-center gap-2.5 text-xs text-muted-foreground font-mono">
+                <span className="h-px w-6 bg-primary" />
+                <span className="tracking-wider uppercase">OMCRE8 STUDIO / DIGITAL & CINEMA</span>
               </div>
 
-              <h1 className="editorial-title animate-rise max-w-2xl font-medium tracking-tight">
-                Ideas to Digital<br className="hidden md:block" /> Products.<br />
+              <h1 className="animate-rise font-bold tracking-tight text-3xl sm:text-4xl md:text-5xl lg:text-[46px] leading-[1.12] text-white">
+                Ideas to Digital Products.<br />
                 <span className="text-muted-foreground">Built to Scale.</span>
               </h1>
 
-              <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
+              <p className="max-w-lg text-sm sm:text-base leading-relaxed text-muted-foreground">
                 Strategy, design, code, and cinema. We engineer resilient digital platforms and craft the cinematic stories that drive measurable growth.
               </p>
 
-              <div className="mt-8 flex flex-wrap items-center gap-4">
-                <Button asChild size="lg">
+              <div className="flex flex-wrap items-center gap-3 pt-2">
+                <Button asChild size="default" className="rounded-xl px-5 py-2.5 font-medium shadow-md">
                   <Link to="/contact">
-                    Start Your Project <ArrowUpRight />
+                    Start Your Project <ArrowUpRight className="ml-1 h-4 w-4" />
                   </Link>
                 </Button>
-                <Button asChild size="lg" variant="outline" className="glass">
+                <Button asChild size="default" variant="outline" className="glass rounded-xl px-5 py-2.5 font-medium">
                   <Link to="/work">
-                    Explore Our Work <ArrowUpRight />
+                    Explore Our Work <ArrowUpRight className="ml-1 h-4 w-4" />
                   </Link>
                 </Button>
-                <Button asChild size="lg" variant="ghost">
+                <Button asChild size="default" variant="ghost" className="rounded-xl px-4 py-2.5 font-medium text-muted-foreground hover:text-white">
                   <Link to="/book">
-                    Book Call with Om <ArrowUpRight />
+                    Book Call with Om <ArrowUpRight className="ml-1 h-4 w-4" />
                   </Link>
                 </Button>
               </div>
             </div>
 
             {/* Right Column: High-Craft Accenture-style Vector Illustration */}
-            <div className="lg:col-span-5 flex items-center justify-center relative">
+            <div className="lg:col-span-6 flex items-center justify-center relative">
               {/* Subtle ambient violet radial glow */}
-              <div className="pointer-events-none absolute h-72 w-72 rounded-full bg-[#9333EA]/15 blur-[100px]" />
-              <div className="relative z-10 w-full">
-                <HeroIllustration />
+              <div className="pointer-events-none absolute h-80 w-80 rounded-full bg-[#9333EA]/20 blur-[100px]" />
+              <div className="relative z-10 w-full max-w-[620px] transition-transform duration-500 hover:scale-[1.02]">
+                <HeroIllustration className="w-full h-auto drop-shadow-[0_15px_35px_rgba(0,0,0,0.6)]" />
               </div>
             </div>
           </div>
 
           {/* Social Proof Bar */}
-          <div className="mt-16 flex flex-wrap items-end justify-between gap-6 border-t border-foreground/15 pt-6 text-xs text-muted-foreground">
+          <div className="mt-8 sm:mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-foreground/15 pt-4 sm:pt-5 text-xs text-muted-foreground">
             <div>
               <p className="font-medium text-foreground">Independent multidisciplinary practice directed by Om Yadav.</p>
-              <p className="mt-1">Hands-on technology architecture, UI/UX, cinema production, and viral growth.</p>
+              <p className="mt-0.5 text-[11px]">Hands-on technology architecture, UI/UX, cinema production, and viral growth.</p>
             </div>
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-4 sm:gap-6 text-[11px]">
               <span>✦ Sub-second Performance</span>
               <span>✦ WCAG AA Compliant</span>
               <span>✦ Full-stack & Cinema</span>
             </div>
-            <ArrowDown size={18} className="text-muted-foreground hidden sm:block" />
+            <ArrowDown size={16} className="text-muted-foreground hidden sm:block" />
           </div>
         </div>
       </section>
@@ -166,7 +164,7 @@ function Index() {
               "Digital Engineering",
               "Brand Strategy",
               "Cinematography",
-              "True Legal Advice",
+              "Scalable Web Apps",
               "E-commerce & D2C",
               "Custom AI Workflows",
               "Video Editing & Color",
@@ -252,78 +250,6 @@ function Index() {
               </div>
             );
           })}
-        </div>
-      </section>
-
-      {/* Featured Case Study Spotlight: True Legal Advice */}
-      <section className="border-y bg-card/60 py-20">
-        <div className="container-x">
-          <div className="mb-10 flex flex-wrap items-end justify-between gap-6">
-            <SectionHead
-              eyebrow="Flagship Case Study"
-              title="True Legal Advice (trulegaladvice.com)"
-              text="How OMCRE8 Studio transformed legal advisory discovery into an accessible, high-converting digital platform."
-            />
-            <Button asChild variant="outline">
-              <Link to="/work/$slug" params={{ slug: "true-legal-advice" }}>
-                Full Case Study <ArrowUpRight />
-              </Link>
-            </Button>
-          </div>
-
-          <div className="grid items-center gap-8 rounded-2xl border border-primary/20 bg-ink/80 p-8 shadow-xl lg:grid-cols-12">
-            <div className="lg:col-span-7 overflow-hidden rounded-xl border border-border/80">
-              <img
-                src={trueLegal.image}
-                alt={trueLegal.name}
-                className="aspect-[16/10] w-full object-cover object-top hover:scale-102 transition-transform duration-500"
-              />
-            </div>
-            <div className="lg:col-span-5 space-y-6">
-              <div>
-                <span className="font-mono text-xs text-primary uppercase">Production Deliverable</span>
-                <h3 className="mt-1 text-2xl font-medium text-foreground">
-                  Streamlined Legal Discovery & Consultation Funnel
-                </h3>
-                <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
-                  We engineered an accessible, high-speed legal portal structuring complex practice areas, automated appointment bookings, and privacy-first enquiry encryption.
-                </p>
-              </div>
-
-              {/* Metrics */}
-              <div className="grid grid-cols-2 gap-4 border-t border-border/60 pt-4">
-                <div>
-                  <div className="text-2xl font-bold text-foreground">&lt; 0.8s</div>
-                  <div className="text-xs text-muted-foreground">Page Load Speed</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-primary">+44%</div>
-                  <div className="text-xs text-muted-foreground">Consultation Bookings</div>
-                </div>
-              </div>
-
-              <div className="flex flex-wrap gap-2 pt-2">
-                {trueLegal.tags.map((t) => (
-                  <span key={t} className="rounded-full border border-border/80 bg-secondary/50 px-3 py-1 text-xs">
-                    {t}
-                  </span>
-                ))}
-              </div>
-
-              <div className="flex gap-3 pt-2">
-                <Button asChild size="sm">
-                  <a href={trueLegal.url} target="_blank" rel="noreferrer">
-                    Visit trulegaladvice.com <ArrowUpRight />
-                  </a>
-                </Button>
-                <Button asChild variant="outline" size="sm" className="border-white/20 text-white hover:bg-white/10">
-                  <Link to="/work/$slug" params={{ slug: "true-legal-advice" }}>
-                    Case Study Breakdown
-                  </Link>
-                </Button>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 

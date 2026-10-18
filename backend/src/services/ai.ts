@@ -108,10 +108,27 @@ export class AiService {
 
     if (q.includes("true legal") || q.includes("trulegaladvice") || q.includes("legal")) {
       intent = "case_study_legal";
-      reply = `**True Legal Advice** (trulegaladvice.com) is one of OMCRE8 Studio's flagship platforms. We transformed a traditional legal information service into an ultra-fast, high-converting digital advisory portal.\n\n• **Core Results**: <0.8s LCP page load, +44% increase in consultation inquiries, and a 31% reduction in mobile bounce rate.\n• **Tech Stack**: React 19, TypeScript, Tailwind CSS, TanStack Start, and encrypted inquiries schema.`;
+      reply = `**True Legal Advice** (trulegaladvice.com) is one of OMCRE8 Studio's client platforms. We transformed a traditional legal information service into an ultra-fast, high-converting digital advisory portal.\n\n• **Core Results**: <0.8s LCP page load, +44% increase in consultation inquiries, and a 31% reduction in mobile bounce rate.\n• **Tech Stack**: React 19, TypeScript, Tailwind CSS, TanStack Start, and encrypted inquiries schema.`;
       actions = [
         { label: "Read Case Study", url: "/work/true-legal-advice" },
         { label: "Visit trulegaladvice.com", url: "https://trulegaladvice.com/" },
+      ];
+    } else if (
+      q.includes("tech") ||
+      q.includes("stack") ||
+      q.includes("framework") ||
+      q.includes("react") ||
+      q.includes("typescript") ||
+      q.includes("backend") ||
+      q.includes("architecture") ||
+      q.includes("code")
+    ) {
+      intent = "tech_stack";
+      reply = `Here is the production architecture OMCRE8 Studio builds with:\n\n• **Frontend**: React 19, TypeScript, Next.js 15, TanStack Start & Router, Tailwind CSS v4, Lucide icons, and Framer Motion micro-interactions.\n• **Backend & APIs**: Node.js, Express, PostgreSQL, Drizzle ORM, Supabase, Redis edge caching, and high-concurrency REST APIs with strict Zod validation.\n• **Performance Standards**: Sub-second LCP (<0.8s), zero layout shift, and WCAG AA accessibility.\n• **Cinema Production**: Sony FX3 & RED cinema rigs, G-Master cinema primes, DaVinci Resolve Studio color grading suite, and broadcast sound engineering.\n• **AI Workflows**: Custom RAG knowledge bases, OpenAI GPT-4o & Google Gemini LLM API orchestration.`;
+      actions = [
+        { label: "Explore Services", url: "/services" },
+        { label: "Calculate Cost", url: "/#estimator" },
+        { label: "Book Call with Om", url: "/book" },
       ];
     } else if (q.includes("om yadav") || q.includes("founder") || q.includes("who is")) {
       intent = "founder_inquiry";
@@ -127,13 +144,15 @@ export class AiService {
       q.includes("pricing") ||
       q.includes("estimate") ||
       q.includes("budget") ||
-      q.includes("rate")
+      q.includes("rate") ||
+      q.includes("how much")
     ) {
       intent = "pricing_estimate";
-      reply = `Our project scopes are transparent and milestone-based:\n\n• **Websites & Landing Pages**: ₹45,000 – ₹85,000 (2–4 weeks)\n• **Custom Web Apps & Software**: ₹1,20,000 – ₹2,20,000 (4–8 weeks)\n• **E-Commerce Stores**: ₹65,000 – ₹1,30,000 (3–5 weeks)\n• **Mobile Apps (iOS & Android)**: from ₹1,50,000 (6–10 weeks)\n• **Film & Brand Video Production**: from ₹75,000 (2–4 weeks)\n• **Instagram Reels & Social Retainer**: from ₹30,000/month\n\nYou can calculate your custom package on our interactive estimator!`;
+      reply = `Our project scopes are transparent and milestone-based:\n\n• **Websites & Landing Pages**: ₹45,000 – ₹85,000 ($600 – $1,100 USD) · 2–3 weeks\n• **Custom Web Apps & Software**: ₹1,20,000 – ₹2,50,000 ($1,500 – $3,200 USD) · 4–8 weeks\n• **E-Commerce Stores**: ₹65,000 – ₹1,40,000 ($850 – $1,800 USD) · 3–5 weeks\n• **Mobile Apps (iOS & Android)**: from ₹1,50,000 ($1,900+ USD) · 6–10 weeks\n• **Film & Brand Video Production**: from ₹75,000 ($950+ USD) · 2–4 weeks\n• **Instagram Reels & Social Retainer**: from ₹30,000/month\n\nMilestone payments: 40% kickoff, 30% alpha/prototype, 30% final launch approval. Full IP and code ownership transferred upon delivery.`;
       actions = [
         { label: "Use Interactive Estimator", url: "/#estimator" },
         { label: "Submit Project Brief", url: "/contact" },
+        { label: "Book Call with Om", url: "/book" },
       ];
     } else if (q.includes("book") || q.includes("call") || q.includes("meeting") || q.includes("calendly") || q.includes("schedule")) {
       intent = "booking";
@@ -144,24 +163,25 @@ export class AiService {
       ];
     } else if (q.includes("video") || q.includes("film") || q.includes("reel") || q.includes("cinema") || q.includes("shoot") || q.includes("edit")) {
       intent = "film_production";
-      reply = `OMCRE8 Studio provides full-service cinema and motion production. We don't just write code; our team includes directors of photography, DaVinci Resolve colorists, and sound designers crafting 4K widescreen brand films, vertical Instagram reels, and macro product cinema.`;
+      reply = `OMCRE8 Studio provides full-service cinema and motion production. We don't just write code; our team includes directors of photography, DaVinci Resolve colorists, and sound designers crafting 4K widescreen brand films, vertical Instagram reels (992K+ and 178K+ viral views), and commercial video campaigns.`;
       actions = [
         { label: "Explore Production", url: "/production" },
         { label: "Watch Showreels", url: "/work" },
+        { label: "Book Call with Om", url: "/book" },
       ];
     } else if (q.includes("team") || q.includes("how many") || q.includes("people") || q.includes("who works")) {
       intent = "team_query";
-      reply = `OMCRE8 Studio operates as an independent multidisciplinary practice directed by Om Yadav, collaborating directly with specialized craft leads across Software Architecture, UI/UX Design, Cinematography, DaVinci Color Grading, and Social Media Virality.`;
+      reply = `OMCRE8 Studio operates as an independent multidisciplinary practice directed by Om Yadav, collaborating directly with specialized craft leads across Software Architecture, UI/UX Design, Cinematography, DaVinci Color Grading, and Social Media Virality. No bloated middle management or account manager tiers.`;
       actions = [
         { label: "Meet Om & Studio", url: "/about" },
         { label: "Start a Project", url: "/contact" },
       ];
     } else {
       intent = "general_studio";
-      reply = `Welcome to OMCRE8 Studio! Founded by Om Yadav, we merge high-craft digital engineering (React 19, TypeScript, scalable backends) with cinematic film production and growth marketing.\n\nWould you like to explore our case studies (like True Legal Advice), estimate a project, or schedule a discovery call with Om?`;
+      reply = `Welcome to OMCRE8 Studio! Founded and directed by Om Yadav, we merge high-craft digital engineering (React 19, TypeScript, scalable backends) with cinematic film production and growth marketing.\n\nWould you like to explore our tech stack, calculate a project estimate, or schedule a discovery call with Om?`;
       actions = [
         { label: "Calculate Project Cost", url: "/#estimator" },
-        { label: "Explore Case Studies", url: "/work" },
+        { label: "Explore Portfolio", url: "/work" },
         { label: "Book a Discovery Call", url: "/book" },
       ];
     }

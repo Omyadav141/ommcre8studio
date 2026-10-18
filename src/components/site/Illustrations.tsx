@@ -13,13 +13,13 @@ const STROKE_COLOR = "#FFFFFF";
  * Accenture-style isometric architectural vector line art depicting
  * digital engineering, cinema production, robotic camera rig, and creative craftsmanship.
  */
-export function HeroIllustration(props: SVGProps<SVGSVGElement>) {
+export function HeroIllustration({ className, ...props }: SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox="0 0 620 540"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="w-full h-auto max-w-[560px] mx-auto select-none"
+      className={`w-full h-auto max-w-[640px] mx-auto select-none ${className || ""}`}
       {...props}
     >
       <defs>
@@ -492,7 +492,7 @@ export function WorkIllustration(props: SVGProps<SVGSVGElement>) {
       <circle cx="94" cy="92" r="3" fill="#EF4444" />
       <circle cx="104" cy="92" r="3" fill="#F59E0B" />
       <circle cx="114" cy="92" r="3" fill="#10B981" />
-      <text x="130" y="95" fill="rgba(255,255,255,0.4)" fontSize="8" fontFamily="monospace">trulegaladvice.com</text>
+      <text x="130" y="95" fill="rgba(255,255,255,0.4)" fontSize="8" fontFamily="monospace">omcre8studio.com</text>
 
       {/* Hero content within preview */}
       <rect x="96" y="116" width="140" height="14" rx="2" fill={PURPLE} filter="url(#work-glow)" opacity="0.9" />
