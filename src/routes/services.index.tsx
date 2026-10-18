@@ -14,6 +14,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { CTA, Reveal, SectionHead, seo } from "@/components/site/Shell";
 import { ProjectEstimator } from "@/components/site/ProjectEstimator";
+import { ServicesIllustration } from "@/components/site/Illustrations";
 import { services } from "@/lib/site";
 
 export const Route = createFileRoute("/services/")({
@@ -106,34 +107,47 @@ const disciplineGroups = [
 function Services() {
   return (
     <>
-      {/* Hero Header */}
+      {/* Hero Header with Vector Illustration */}
       <section className="mt-3 border-b border-white/10">
-        <div className="container-x pt-16 pb-14 md:pt-24 md:pb-20">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1 font-mono text-xs text-[#C59B4B]">
-            <Sparkles size={12} />
-            <span>OMMCRE8 STUDIO / CAPABILITIES & CRAFT</span>
-          </div>
+        <div className="container-x pt-14 pb-12 md:pt-20 md:pb-16">
+          <div className="grid gap-12 lg:grid-cols-12 items-center">
+            {/* Left Content */}
+            <div className="lg:col-span-7">
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 px-3 py-1 font-mono text-xs text-[#C59B4B]">
+                <Sparkles size={12} />
+                <span>OMMCRE8 STUDIO / CAPABILITIES & CRAFT</span>
+              </div>
 
-          <h1 className="mt-5 max-w-4xl text-5xl font-medium tracking-tight text-white md:text-7xl font-sans">
-            More than a website.<br />
-            <span className="text-[#C59B4B]">A complete studio.</span>
-          </h1>
+              <h1 className="mt-5 max-w-2xl text-4xl font-medium tracking-tight text-white md:text-6xl font-sans">
+                More than a website.<br />
+                <span className="text-[#C59B4B]">A complete studio.</span>
+              </h1>
 
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-slate-200">
-            Digital engineering, brand strategy, cinema production, narrative editing, and performance marketing. Choose a single discipline or commission an end-to-end studio partnership led by Om Yadav.
-          </p>
+              <p className="mt-6 max-w-xl text-base md:text-lg leading-relaxed text-slate-200">
+                Digital engineering, brand strategy, cinema production, narrative editing, and performance marketing. Choose a single discipline or commission an end-to-end studio partnership led by Om Yadav.
+              </p>
 
-          <div className="mt-8 flex flex-wrap gap-4">
-            <Button asChild size="lg" className="bg-[#C59B4B] text-[#08090B] hover:bg-[#D4A359] font-semibold text-xs">
-              <Link to="/contact">
-                Start a Project Brief <ArrowUpRight size={14} />
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10 text-xs">
-              <Link to="/book">
-                Book Call with Om <ArrowUpRight size={14} />
-              </Link>
-            </Button>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <Button asChild size="lg" className="bg-[#C59B4B] text-[#08090B] hover:bg-[#D4A359] font-semibold text-xs">
+                  <Link to="/contact">
+                    Start a Project Brief <ArrowUpRight size={14} />
+                  </Link>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10 text-xs">
+                  <Link to="/book">
+                    Book Call with Om <ArrowUpRight size={14} />
+                  </Link>
+                </Button>
+              </div>
+            </div>
+
+            {/* Right: Accenture-style Full-Stack Vector Illustration */}
+            <div className="lg:col-span-5 flex items-center justify-center relative">
+              <div className="pointer-events-none absolute h-64 w-64 rounded-full bg-[#9333EA]/15 blur-[90px]" />
+              <div className="relative z-10 w-full">
+                <ServicesIllustration />
+              </div>
+            </div>
           </div>
         </div>
       </section>

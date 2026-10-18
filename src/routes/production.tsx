@@ -10,6 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { CTA, Reveal, SectionHead, seo } from "@/components/site/Shell";
 import { ReelsShowcase } from "@/components/site/ReelsShowcase";
+import { ProductionIllustration } from "@/components/site/Illustrations";
 
 export const Route = createFileRoute("/production")({
   head: () =>
@@ -78,29 +79,43 @@ const formats = [
 function Production() {
   return (
     <>
-      {/* Hero Header */}
+      {/* Hero Header with Production Vector Illustration */}
       <section className="mt-3 border-b border-white/10">
-        <div className="container-x pt-16 pb-12 md:pt-24">
-          <p className="eyebrow text-[#C59B4B]">OMMCRE8 STUDIO / Film & production</p>
-          <h1 className="mt-5 max-w-3xl text-5xl font-medium tracking-tight text-white md:text-7xl font-sans">
-            Film & creative<br />
-            <span className="text-[#C59B4B]">production.</span>
-          </h1>
-          <p className="mt-7 max-w-xl text-lg leading-relaxed text-neutral-400">
-            The idea. The shoot. The final cut. We craft high-retention visual stories for brands, leaders, and fast-growing practices — with relentless purpose behind every frame.
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Button asChild size="lg" className="bg-[#C59B4B] text-[#08090B] hover:bg-[#D4A359] font-semibold">
-              <Link to="/contact" search={{ service: "video-production" }}>
-                Discuss a production <ArrowUpRight />
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10">
-              <Link to="/book">
-                Book a call <ArrowUpRight />
-              </Link>
-            </Button>
+        <div className="container-x pt-14 pb-12 md:pt-20 md:pb-16">
+          <div className="grid gap-12 lg:grid-cols-12 items-center">
+            {/* Left Content */}
+            <div className="lg:col-span-7">
+              <p className="eyebrow text-[#C59B4B]">OMMCRE8 STUDIO / Film & production</p>
+              <h1 className="mt-5 max-w-2xl text-4xl font-medium tracking-tight text-white md:text-6xl font-sans">
+                Film & creative<br />
+                <span className="text-[#C59B4B]">production.</span>
+              </h1>
+              <p className="mt-6 max-w-xl text-base md:text-lg leading-relaxed text-neutral-300">
+                The idea. The shoot. The final cut. We craft high-retention visual stories for brands, leaders, and fast-growing practices — with relentless purpose behind every frame.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Button asChild size="lg" className="bg-[#C59B4B] text-[#08090B] hover:bg-[#D4A359] font-semibold">
+                  <Link to="/contact" search={{ service: "video-production" }}>
+                    Discuss a production <ArrowUpRight />
+                  </Link>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="border-white/20 text-white hover:bg-white/10">
+                  <Link to="/book">
+                    Book a call <ArrowUpRight />
+                  </Link>
+                </Button>
+              </div>
+            </div>
+
+            {/* Right: Accenture-style Cinema Vector Illustration */}
+            <div className="lg:col-span-5 flex items-center justify-center relative">
+              <div className="pointer-events-none absolute h-64 w-64 rounded-full bg-[#9333EA]/15 blur-[90px]" />
+              <div className="relative z-10 w-full">
+                <ProductionIllustration />
+              </div>
+            </div>
           </div>
+
           <p className="mt-12 border-t border-white/10 pt-5 text-xs font-mono text-neutral-500">
             Concept & Scripting &nbsp;/&nbsp; Cinematography &nbsp;/&nbsp; Editing &nbsp;/&nbsp; Colour & Sound Suite
           </p>

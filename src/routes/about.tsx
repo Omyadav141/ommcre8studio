@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CTA, Reveal, SectionHead, seo } from "@/components/site/Shell";
+import { AboutIllustration } from "@/components/site/Illustrations";
 import { studio } from "@/lib/site";
 
 export const Route = createFileRoute("/about")({
@@ -31,25 +32,32 @@ function About() {
           <span>INDEPENDENT · HANDS-ON · MULTIDISCIPLINARY</span>
         </div>
 
-        <h1 className="mt-5 max-w-4xl text-5xl font-medium tracking-tight text-white md:text-7xl font-sans">
-          One studio.<br />
-          <span className="text-[#C59B4B]">Directed by {studio.founder}.</span>
-        </h1>
+        <div className="grid gap-12 lg:grid-cols-12 items-center mt-5">
+          <div className="lg:col-span-7">
+            <h1 className="max-w-3xl text-4xl font-medium tracking-tight text-white md:text-6xl font-sans">
+              One studio.<br />
+              <span className="text-[#C59B4B]">Directed by {studio.founder}.</span>
+            </h1>
 
-        <div className="mt-12 grid gap-10 border-t border-white/10 pt-10 md:grid-cols-2">
-          <p className="text-2xl font-light leading-relaxed text-white">
-            The architect and creative director behind high-converting client platforms, viral social media growth, and cinematic productions.
-          </p>
-          <div className="space-y-5 leading-relaxed text-slate-200 text-sm">
-            <p>
-              <strong className="text-white">OMMCRE8 Studio</strong> is the independent practice of <strong className="text-white">{studio.founder}</strong>. Rather than running a bloated agency with endless account managers, Om works hands-on as your principal technology architect, visual designer, and film director.
+            <p className="mt-6 text-xl font-light leading-relaxed text-white">
+              The architect and creative director behind high-converting client platforms, viral social media growth, and cinematic productions.
             </p>
-            <p>
-              We engineer custom digital platforms from the ground up—like our flagship client platform <strong className="text-white">True Legal Advice (trulegaladvice.com)</strong>—and scale organic reach through viral short-form cinema reels generating <strong className="text-[#C59B4B]">992,000+ views</strong>.
-            </p>
-            <p>
-              From the first line of code and user journey mapping to DaVinci Resolve color grading and high-intent marketing funnels, every deliverable is crafted with relentless precision.
-            </p>
+
+            <div className="mt-6 space-y-4 leading-relaxed text-slate-200 text-sm">
+              <p>
+                <strong className="text-white">OMMCRE8 Studio</strong> is the independent practice of <strong className="text-white">{studio.founder}</strong>. Rather than running a bloated agency with endless account managers, Om works hands-on as your principal technology architect, visual designer, and film director.
+              </p>
+              <p>
+                We engineer custom digital platforms from the ground up—like our flagship client platform <strong className="text-white">True Legal Advice (trulegaladvice.com)</strong>—and scale organic reach through viral short-form cinema reels generating <strong className="text-[#C59B4B]">992,000+ views</strong>.
+              </p>
+            </div>
+          </div>
+
+          <div className="lg:col-span-5 flex items-center justify-center relative">
+            <div className="pointer-events-none absolute h-64 w-64 rounded-full bg-[#9333EA]/15 blur-[90px]" />
+            <div className="relative z-10 w-full">
+              <AboutIllustration />
+            </div>
           </div>
         </div>
       </section>

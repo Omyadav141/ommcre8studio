@@ -17,6 +17,7 @@ import { CTA, Reveal, SectionHead, seo } from "@/components/site/Shell";
 import { ProjectCard } from "@/components/site/ProjectCard";
 import { ProjectEstimator } from "@/components/site/ProjectEstimator";
 import { ReelsShowcase } from "@/components/site/ReelsShowcase";
+import { HeroIllustration } from "@/components/site/Illustrations";
 import { projects, studio, testimonials } from "@/lib/site";
 
 export const Route = createFileRoute("/")({
@@ -92,39 +93,53 @@ function Index() {
 
   return (
     <>
-      {/* Hero Section */}
+      {/* Hero Section with Accenture-style Vector Illustration */}
       <section className="relative isolate mt-3 overflow-hidden border-b">
-        <div className="container-x pt-16 pb-12 md:pt-28 md:pb-16">
-          <div className="mb-8 flex items-center gap-3 text-xs text-muted-foreground">
-            <span className="h-px w-8 bg-primary" />
-            OMCRE8 STUDIO / INDEPENDENT DIGITAL & CINEMA
-          </div>
+        <div className="container-x pt-14 pb-12 md:pt-20 md:pb-16">
+          <div className="grid gap-12 lg:grid-cols-12 items-center">
+            {/* Left Column: Headlines & Actions */}
+            <div className="lg:col-span-7">
+              <div className="mb-6 flex items-center gap-3 text-xs text-muted-foreground">
+                <span className="h-px w-8 bg-primary" />
+                <span>OMCRE8 STUDIO / INDEPENDENT DIGITAL & CINEMA</span>
+              </div>
 
-          <h1 className="editorial-title animate-rise max-w-4xl font-medium tracking-tight">
-            Ideas to Digital<br className="hidden md:block" /> Products.<br />
-            <span className="text-muted-foreground">Built to Scale.</span>
-          </h1>
+              <h1 className="editorial-title animate-rise max-w-2xl font-medium tracking-tight">
+                Ideas to Digital<br className="hidden md:block" /> Products.<br />
+                <span className="text-muted-foreground">Built to Scale.</span>
+              </h1>
 
-          <p className="mt-7 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
-            Strategy, design, code, and cinema. We engineer resilient digital platforms and craft the cinematic stories that drive measurable growth.
-          </p>
+              <p className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
+                Strategy, design, code, and cinema. We engineer resilient digital platforms and craft the cinematic stories that drive measurable growth.
+              </p>
 
-          <div className="mt-9 flex flex-wrap items-center gap-4">
-            <Button asChild size="lg">
-              <Link to="/contact">
-                Start Your Project <ArrowUpRight />
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="glass">
-              <Link to="/work">
-                Explore Our Work <ArrowUpRight />
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="ghost">
-              <Link to="/book">
-                Book Call with Om <ArrowUpRight />
-              </Link>
-            </Button>
+              <div className="mt-8 flex flex-wrap items-center gap-4">
+                <Button asChild size="lg">
+                  <Link to="/contact">
+                    Start Your Project <ArrowUpRight />
+                  </Link>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="glass">
+                  <Link to="/work">
+                    Explore Our Work <ArrowUpRight />
+                  </Link>
+                </Button>
+                <Button asChild size="lg" variant="ghost">
+                  <Link to="/book">
+                    Book Call with Om <ArrowUpRight />
+                  </Link>
+                </Button>
+              </div>
+            </div>
+
+            {/* Right Column: High-Craft Accenture-style Vector Illustration */}
+            <div className="lg:col-span-5 flex items-center justify-center relative">
+              {/* Subtle ambient violet radial glow */}
+              <div className="pointer-events-none absolute h-72 w-72 rounded-full bg-[#9333EA]/15 blur-[100px]" />
+              <div className="relative z-10 w-full">
+                <HeroIllustration />
+              </div>
+            </div>
           </div>
 
           {/* Social Proof Bar */}
@@ -309,13 +324,11 @@ function Index() {
               </div>
             </div>
           </div>
-
-          {/* Viral Client Reels Showcase (Produced & Scaled by OMMCRE8 Studio) */}
-          <div className="mt-14 border-t border-white/10 pt-10">
-            <ReelsShowcase />
-          </div>
         </div>
       </section>
+
+      {/* Standalone Viral Client Reels Showcase (Unboxed, freely flowing) */}
+      <ReelsShowcase />
 
       {/* Work & Concepts Grid */}
       <section className="border-b bg-ink py-20">

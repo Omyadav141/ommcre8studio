@@ -216,7 +216,7 @@ export function ReelsShowcase() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden rounded-3xl bg-[#08090B] py-12 md:py-16 text-[#EDEDED] border border-white/10">
+    <section className="relative overflow-hidden py-16 md:py-24 text-[#EDEDED] border-y border-white/10">
       {/* Subtle gold / ambient glow accents */}
       <div className="pointer-events-none absolute -top-24 right-1/4 h-80 w-80 rounded-full bg-[#C59B4B]/10 blur-[120px]" />
       <div className="pointer-events-none absolute -bottom-24 left-1/4 h-80 w-80 rounded-full bg-amber-500/10 blur-[120px]" />
